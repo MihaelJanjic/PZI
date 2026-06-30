@@ -94,4 +94,17 @@ class ImageController extends Controller
             'message' => 'File deleted successfully'
         ]);
     }
+
+    public function serve(int $id)
+    {
+        $image = Image::findOrFail($id);
+
+        $path = Storage::disk('public')->path($image->path);
+
+        if (!file_exists($path)) {
+            abort(404, 'File not found');
+        }
+
+        return response()->file($path);
+    }
 }

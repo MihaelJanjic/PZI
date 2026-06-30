@@ -39,7 +39,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/bugs/{bug}/comments', [CommentsController::class, 'index']);
     Route::post('/bugs/{bug}/comments', [CommentsController::class, 'store']);
-    Route::apiResource('images', ImageController::class)->middleware('auth:sanctum');
+    Route::apiResource('images', ImageController::class);
 });
 
 // Public routes
@@ -50,3 +50,4 @@ Route::apiResource('bugs', BugsController::class)->only([
     'index',
     'show'
 ]);
+Route::get('/images/file/{id}', [ImageController::class, 'serve']);

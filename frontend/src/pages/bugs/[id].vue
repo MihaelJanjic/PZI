@@ -61,10 +61,10 @@
             <v-row dense>
               <v-col v-for="media in bug.images" :key="media.id" cols="12" sm="6" md="4">
                 <template v-if="media.type?.startsWith('video')">
-                  <video :src="fileUrl(media.path)" controls class="rounded-lg" style="width: 100%;" />
+                  <video :src="fileUrl(media.id)" controls class="rounded-lg" style="width: 100%;" />
                 </template>
                 <template v-else>
-                  <v-img :src="fileUrl(media.path)" aspect-ratio="1" class="rounded-lg" contain />
+                  <v-img :src="fileUrl(media.id)" aspect-ratio="1" class="rounded-lg" contain />
                 </template>
               </v-col>
             </v-row>
@@ -91,10 +91,10 @@
               <v-row dense>
                 <v-col v-for="media in comment.images" :key="media.id" cols="12" sm="6" md="4">
                   <template v-if="media.type?.startsWith('video')">
-                    <video :src="fileUrl(media.path)" controls style="max-width: 300px; border-radius: 8px;" />
+                    <video :src="fileUrl(media.id)" controls style="max-width: 300px; border-radius: 8px;" />
                   </template>
                   <template v-else>
-                    <v-img :src="fileUrl(media.path)" max-width="300" class="rounded-lg" contain />
+                    <v-img :src="fileUrl(media.id)" max-width="300" class="rounded-lg" contain />
                   </template>
                 </v-col>
               </v-row>
@@ -153,7 +153,6 @@ const route = useRoute()
 const bugId = route.params.id
 
 const API_BASE = import.meta.env.VITE_API_URL + "/api"
-const STORAGE_BASE = API_BASE.replace('/api', '') + "/storage/"
 
 const bug = ref(null)
 const comments = ref([])
@@ -171,7 +170,9 @@ const perPage = 5
 const loadingComments = ref(false)
 
 const MAX_FILE_SIZE = 100 * 1024 * 1024
-const fileUrl = path => STORAGE_BASE + path
+
+const fileUrl = (id) => `${API_BASE}/images/file/${id}`
+
 const validateFiles = files => {
   if (!files || files.length === 0) return true
   return files.every(f => f.size <= MAX_FILE_SIZE) || 'Each file must be under 100MB'
