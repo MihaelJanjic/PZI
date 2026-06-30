@@ -11,7 +11,7 @@ use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\SuperAdminMiddleware;
 
 // Superadmin-only routes
-Route::middleware(['auth:sanctum', SuperAdminMiddleware::class])->group(function () {
+Route::prefix("superadmin")->middleware(['auth:sanctum', SuperAdminMiddleware::class])->group(function () {
     Route::delete('/users/remove', [UsersController::class, 'remove']);
     Route::apiResource('users', UsersController::class);
     Route::post('/categories', [CategoriesController::class, 'store']);
@@ -22,7 +22,7 @@ Route::middleware(['auth:sanctum', SuperAdminMiddleware::class])->group(function
 });
 
 // Admin-only routes
-Route::middleware(['auth:sanctum', AdminMiddleware::class])->group(function () {
+Route::prefix("admin")->middleware(['auth:sanctum', AdminMiddleware::class])->group(function () {
     Route::post('/bugs/close-resolved', [BugsController::class, 'closeResolved']);
 });
 

@@ -124,7 +124,7 @@ const submitForm = async () => {
     const normalizedEmail = email.value.trim().toLowerCase()
 
     const res = await axios.post(
-      `${import.meta.env.VITE_API_URL}/api/users/change-role`,
+      `${import.meta.env.VITE_API_URL}/api/superadmin/users/change-role`,
       {
         email: normalizedEmail,
         user_type: selectedRole.value
@@ -168,7 +168,7 @@ const confirmRemoveUser = async () => {
   try {
     const normalizedEmail = email.value.trim().toLowerCase()
     const res = await axios.delete(
-      `${import.meta.env.VITE_API_URL}/api/users/remove`,
+      `${import.meta.env.VITE_API_URL}/api/superadmin/users/remove`,
       {
         data: { email: normalizedEmail },
         headers: { Authorization: `Bearer ${authState.token}` }

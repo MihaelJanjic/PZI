@@ -189,7 +189,7 @@ const confirmCloseResolved = async () => {
   if (!days.value || days.value < 1) return
   closing.value = true
   try {
-    await axios.post(`${import.meta.env.VITE_API_URL}/api/bugs/close-resolved`,
+    await axios.post(`${import.meta.env.VITE_API_URL}/api/admin/bugs/close-resolved`,
       { older_than_days: days.value },
       { headers: { Authorization: `Bearer ${authState.token}` } }
     )
@@ -206,7 +206,7 @@ const confirmDeleteClosed = async () => {
   if (!deleteDays.value || deleteDays.value < 1) return
   deleting.value = true
   try {
-    await axios.post(`${import.meta.env.VITE_API_URL}/api/bugs/delete-closed`,
+    await axios.post(`${import.meta.env.VITE_API_URL}/api/superadmin/bugs/delete-closed`,
       { older_than_days: deleteDays.value },
       { headers: { Authorization: `Bearer ${authState.token}` } }
     )
@@ -223,7 +223,7 @@ const openCategoryDialog = async () => { categoryDialog.value = true; await load
 const loadCategories = async () => {
   try {
     const res = await axios.get(
-      `${import.meta.env.VITE_API_URL}/api/categories`, 
+      `${import.meta.env.VITE_API_URL}/api/superadmin/categories`, 
       { headers: { Authorization: `Bearer ${authState.token}` } }
     )
     categories.value = res.data || []
@@ -234,7 +234,7 @@ const createCategory = async () => {
   creating.value = true
   try {
     const res = await axios.post(
-      `${import.meta.env.VITE_API_URL}/api/categories`, 
+      `${import.meta.env.VITE_API_URL}/api/superadmin/categories`, 
       { name: newCategoryName.value }, { headers: { Authorization: `Bearer ${authState.token}` } }
     )
     categories.value.push(res.data)
@@ -245,7 +245,7 @@ const deleteCategory = async (id) => {
   if (!confirm('Are you sure you want to delete this category?')) return
   try {
     await axios.delete(
-      `${import.meta.env.VITE_API_URL}/api/categories/${id}`, 
+      `${import.meta.env.VITE_API_URL}/api/superadmin/categories/${id}`, 
       { headers: { Authorization: `Bearer ${authState.token}` } }
     )
     categories.value = categories.value.filter(c => c.id !== id)
