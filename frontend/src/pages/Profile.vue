@@ -223,7 +223,7 @@ const openCategoryDialog = async () => { categoryDialog.value = true; await load
 const loadCategories = async () => {
   try {
     const res = await axios.get(
-      `${import.meta.env.VITE_API_URL}/api/superadmin/categories`, 
+      `${import.meta.env.VITE_API_URL}/api/categories`, 
       { headers: { Authorization: `Bearer ${authState.token}` } }
     )
     categories.value = res.data || []
